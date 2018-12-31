@@ -1,5 +1,8 @@
 import Vector from "./vector"; 
 import {add, multiply} from "./vector_math"; 
+let settings = require("../settings.json"); 
+let i = 0; 
+let j = 0;
 
 export default class Object {
 
@@ -31,16 +34,40 @@ export default class Object {
 
     setForce(newForce) {
         this.velocity = new Vector(newForce.x, newForce.y); 
+        i = 0;
+        j = 0;
     }
 
     addForce(newForce) {
         this.velocity = add([this.velocity, newForce]); 
+        console.log(this.velocity);
+        i = 0;
+        j = 0;
     }
 
     
 
     draw(ctx) {
         ctx.save();
+        
+        if(this.velocity.x != 0 && i != settings.CALCULATIONMAX) {
+            this.velocity.x = this.velocity.x * 0.97;
+            i++; 
+            console.log(i); 
+        }
+        else {
+            i = 0; 
+            this.velocity.x = 0; 
+        }
+        if(this.velocity.y != 0 && j != settings.CALCULATIONMAX) {
+            this.velocity.y = this.velocity.y * 0.97;
+            j++;
+        }
+        else {
+            j = 0; 
+            this.velocity.y = 0;
+        }
+
         if(this.velocity.x != 0 || this.velocity.y != 0) {
             this.position.x = this.position.x + this.velocity.x; 
             this.position.y = this.position.y + this.velocity.y; 

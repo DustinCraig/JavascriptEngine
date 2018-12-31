@@ -1,5 +1,4 @@
 import Input from "./input"; 
-
 export default class Engine {
     constructor() {
         document.body.style.margin = "0px";
